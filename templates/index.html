@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block javascript %}
+<script src="/static/js/index.js"></script>
+{% endblock %}
+
+{% block title %}
+Equipments
+{% endblock %}
+
+{% block main %}
+<main class="d-flex">
+  {% for equipment in equipments %}
+  <div class="card m-2" style="width: 24rem;">
+    <img src="{{ equipment.image_url }}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{ equipment.title }}</h5>
+      <p class="card-text h-50 d-flex align-items-center">{{ equipment.description }}</p>
+      <p class="card-text">Remain: {{ equipment.remain_count }}</p>
+      <p class="card-text">{{ equipment.price | ntd }}</p>
+      <button type="button" onclick="rent({{ equipment }})" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#rentModal">
+        Rent now!
+      </button>
+    </div>
+  </div>
+  {% endfor %}
+
+  <!-- rent modal -->
+  <div class="modal fade" id="rentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="rent-form" action="/rent" method="post">
+            <input type="text" name="equipment-id" class="d-none id" value="1">
+            <table>
+              <thead>
+                <tr>
+                  <th class="w-50 text-start ps-5">Product
+                  </th>
+                  <th class="w-25">Count</th>
+                  <th class="w-25">Price Per Day</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="product d-flex align-items-center">
+                    <img class="w-25 mx-5" src="" alt="">
+                    <span class="title"></span>
+                  </td>
+                  <td class="count">
+                    <select class="form-select form-select-sm w-50 m-auto" aria-label=".form-select-sm example"
+                      name="count" form="rent-form">
+                      <option selected>Select</option>
+                    </select>
+                  </td>
+                  <td class="price">
+                    <span></span> TWD / Day
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" form="rent-form" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+{% endblock %}

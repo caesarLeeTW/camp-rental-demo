@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+History
+{% endblock %}
+
+{% block main %}
+
+<table class="table tablestriped">
+  <thead>
+    <tr>
+      <th class="text-start">Product</th>
+      <th class="text-end">Count</th>
+      <th class="text-end">Price</th>
+      <th class="text-end">Transacted</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for transaction in transactions %}
+    <tr>
+      <th class="text-start">{{ transaction.equipment }}</th>
+      <th class="text-end">{{ transaction.count }}</th>
+      <th class="text-end">{{ transaction.price | ntd }}</th>
+      <th class="text-end">{{ transaction.time }}</th>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
